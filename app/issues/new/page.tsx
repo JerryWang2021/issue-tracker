@@ -10,10 +10,13 @@ import "easymde/dist/easymde.min.css"
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import SimpleMDE from "react-simplemde-editor"
+import dynamic from 'next/dynamic'
 import { z } from 'zod'
 
-// NPM: react-simplemde-editor, react-hook-form, axios
+const SimpleMDE = dynamic(
+    () => import('react-simplemde-editor'),
+    { ssr: false }
+)
 
  type IssueForm = z.infer<typeof createIssueSchema>
 
