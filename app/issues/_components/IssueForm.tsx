@@ -2,7 +2,7 @@
 
 import ErrorMessage from '@/app/components/ErrorMessage'
 import Spinner from '@/app/components/Spinner'
-import { createIssueSchema } from '@/app/validationSchemas'
+import { issueSchema } from '@/app/validationSchemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Callout, TextField } from '@radix-ui/themes'
 import axios from 'axios'
@@ -19,13 +19,13 @@ const SimpleMDE = dynamic(
     { ssr: false }
 )
 
- type IssueFormData = z.infer<typeof createIssueSchema>
+ type IssueFormData = z.infer<typeof issueSchema>
 
  
 const IssueForm = ({ issue }: { issue?: Issue}) => {
     const router = useRouter()
     const {register, control, handleSubmit, formState: {errors}} = useForm<IssueFormData>({
-        resolver: zodResolver(createIssueSchema)
+        resolver: zodResolver(issueSchema)
     });
     const  [error, setError] = useState('')
     const [isSubmitting, setSubmitting] = useState(false)
@@ -62,7 +62,7 @@ const IssueForm = ({ issue }: { issue?: Issue}) => {
             />
             <ErrorMessage>{errors.description?.message}</ErrorMessage>
             <Button disabled={isSubmitting}>
-                Submit New Issue {isSubmitting && <Spinner />}
+                Submit Issue {isSubmitting && <Spinner />}
             </Button>
         </form>
     </div>
