@@ -14,7 +14,7 @@ const AssigneeSelect = ({ issue }: { issue: Issue}) => {
 
     if (error) return null
 
-    const assignIssue = async (userId: String)=>{
+    const assignIssue = async (userId: string)=>{
         try {
             await axios.patch('/api/issues/' + issue.id,{         assignedToUserId: userId==="unassigned"? null: userId})
         } catch (error) {
