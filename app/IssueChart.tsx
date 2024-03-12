@@ -1,25 +1,29 @@
 "use client";
 
+import { Status } from "@prisma/client";
 import { Card } from "@radix-ui/themes";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
-interface Props {
-  open: number;
-  inProgress: number;
-  closed: number;
+interface IssueCount {
+  label: string;
+  status: Status;
+  count: number;
 }
 
-const IssueChart = ({ open, inProgress, closed }: Props) => {
-  const data = [
-    { label: "Open", value: open },
-    { label: "In Progress", value: inProgress },
-    { label: "Closed", value: closed },
-  ];
+interface Props {
+  data: IssueCount[];
+}
+
+const IssueChart = ({ data }: Props) => {
+  const chartData = data.map((item) => ({
+    label: item.label,
+    value: item.count,
+  }));
 
   return (
     <Card>
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={data}>
+        <BarChart data={chartData}>
           <XAxis dataKey="label" />
           <YAxis />
           <Bar
